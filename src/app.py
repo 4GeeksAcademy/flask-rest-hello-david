@@ -8,7 +8,8 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User
+from models import db, User ,Planetas, Personas, Vehiculos , Favoritos
+
 #from models import Person
 
 app = Flask(__name__)
@@ -39,11 +40,94 @@ def sitemap():
 @app.route('/user', methods=['GET'])
 def handle_hello():
 
+    users = User.query.all()
+    users_serialized = list(map(lambda item:item.serialize(), users))
+    print(users_serialized)
+
+
     response_body = {
-        "msg": "Hello, this is your GET /user response "
+        "msg": "Ok",
+        "data": users_serialized
+    
     }
 
     return jsonify(response_body), 200
+
+
+@app.route('/planetas', methods=['GET'])
+def handle_planetas():
+
+    planetas = Planetas.query.all()
+    planetas_serialized = list(map(lambda item:item.serialize(), planetas))
+    print(planetas_serialized)
+
+
+    response_body = {
+        "msg": "ok",
+        "data": planetas_serialized
+    
+    }
+
+    return jsonify(response_body), 200
+
+
+
+@app.route('/personas', methods=['GET'])
+def handle_personas():
+
+    personas = Personas.query.all()
+    personas_serialized = list(map(lambda item:item.serialize(), personas))
+    print(personas_serialized)
+
+
+    response_body = {
+        "msg": "ok",
+        "data": personas_serialized
+    
+    }
+
+    return jsonify(response_body), 200
+
+
+
+@app.route('/vehiculos', methods=['GET'])
+def handle_vehiculos():
+
+    vehiculos = Vehiculos.query.all()
+    vehiculos_serialized = list(map(lambda item:item.serialize(), vehiculos))
+    print(vehiculos_serialized)
+
+
+    response_body = {
+        "msg": "ok",
+        "data": vehiculos_serialized
+    
+    }
+
+    return jsonify(response_body), 200
+
+
+@app.route('/favoritos', methods=['GET'])
+def handle_favoritos():
+
+    favoritos = Favoritos.query.all()
+    favoritos_serialized = list(map(lambda item:item.serialize(), favoritos))
+    print(favoritos_serialized)
+
+
+    response_body = {
+        "msg": "ok",
+        "data": favoritos_serialized
+    
+    }
+
+    return jsonify(response_body), 200
+
+
+
+
+
+
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
