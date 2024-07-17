@@ -50,8 +50,35 @@ def handle_hello():
         "data": users_serialized
     
     }
+    return jsonify(response_body), 200
+
+@app.route('/user/<int:id>', methods=['GET'])
+def get_people_by_id(id):
+    user = User.query.filter_by(id=id).first()
+    user_serialize = user.serialize()
+
+    response_body = {
+        "msg": "Ok",
+        "data": user_serialize
+    }
 
     return jsonify(response_body), 200
+
+
+@app.route('/user', methods=['POST'])
+def create_user():
+    body = request.json
+    me = User(email=body["email"], password=body["password"], is_active=body["is_active"])
+    db.session.add(me)
+    db.session.commit()
+
+    response_body = {
+        "msg": "Ok",
+        "id": me.id
+    }
+
+    return jsonify(response_body), 200
+
 
 
 @app.route('/planetas', methods=['GET'])
@@ -66,6 +93,33 @@ def handle_planetas():
         "msg": "ok",
         "data": planetas_serialized
     
+    }
+    return jsonify(response_body), 200
+
+
+@app.route('/planetas/<int:id>', methods=['GET'])
+def get_planetas_by_id(id):
+    planetas = Planetas.query.filter_by(id=id).first()
+    planetas_serialize = planetas.serialize()
+
+    response_body = {
+        "msg": "Ok",
+        "data": planetas_serialize
+    }
+
+    return jsonify(response_body), 200
+
+
+@app.route('/planetas', methods=['POST'])
+def create_planetas():
+    body = request.json
+    me = Planetas(nombre_planeta=body["nombre_planeta"], periodo_rotacion=body["periodo_rotacion"], diametro=body["diametro"], clima=body["clima"], terreno=body ["terreno"],)
+    db.session.add(me)
+    db.session.commit()
+
+    response_body = {
+        "msg": "Ok",
+        "id": me.id
     }
 
     return jsonify(response_body), 200
@@ -85,8 +139,36 @@ def handle_personas():
         "data": personas_serialized
     
     }
+    return jsonify(response_body), 200
+
+
+@app.route('/personas/<int:id>', methods=['GET'])
+def get_personas_by_id(id):
+    personas = Personas.query.filter_by(id_persona=id).first()
+    personas_serialize = personas.serialize()
+
+    response_body = {
+        "msg": "Ok",
+        "data": personas_serialize
+    }
 
     return jsonify(response_body), 200
+
+
+@app.route('/personas', methods=['POST'])
+def create_personas():
+    body = request.json
+    me = Personas(nombre_persona=body["nombre_persona"], peso=body["peso"], color_de_piel=body["color_de_piel"], color_de_pelo=body["color_de_pelo"], genero=body ["genero"], birth_year=body ["birth_year"])
+    db.session.add(me)
+    db.session.commit()
+
+    response_body = {
+        "msg": "Ok",
+        "id": me.id
+    }
+
+    return jsonify(response_body), 200
+
 
 
 
@@ -103,8 +185,37 @@ def handle_vehiculos():
         "data": vehiculos_serialized
     
     }
+    return jsonify(response_body), 200
+
+
+@app.route('/vehiculos/<int:id>', methods=['GET'])
+def get_vehiculos_by_id(id):
+    vehiculos = Vehiculos.query.filter_by(id_vehiculos=id).first()
+    vehiculos_serialize = vehiculos.serialize()
+
+    response_body = {
+        "msg": "Ok",
+        "data": vehiculos_serialize
+    }
 
     return jsonify(response_body), 200
+
+
+
+@app.route('/vehiculos', methods=['POST'])
+def create_vehiculos():
+    body = request.json
+    me = Vehiculos(nombre_vehiculos=body["nombre_vehiculos"], modelo=body["modelo"], longitud=body["longitud"], tripulacion=body["tripulacion"])
+    db.session.add(me)
+    db.session.commit()
+
+    response_body = {
+        "msg": "Ok",
+        "id": me.id
+    }
+
+    return jsonify(response_body), 200
+
 
 
 @app.route('/favoritos', methods=['GET'])
@@ -120,9 +231,35 @@ def handle_favoritos():
         "data": favoritos_serialized
     
     }
+    return jsonify(response_body), 200
+
+
+@app.route('/favoritos/<int:id>', methods=['GET'])
+def get_favoritos_by_id(id):
+    favoritos = Favoritos.query.filter_by(id=id).first()
+    favoritos_serialize = favoritos.serialize()
+
+    response_body = {
+        "msg": "Ok",
+        "data": favoritos_serialize
+    }
 
     return jsonify(response_body), 200
 
+
+@app.route('/favoritos', methods=['POST'])
+def create_favoritos():
+    body = request.json
+    me = Favoritos(usuario_id=body["usuario_id"], planeta_id=body["planeta_id"], vehiculo_id=body["vehiculo_id"], nombre_id=body["nombre_id"])
+    db.session.add(me)
+    db.session.commit()
+
+    response_body = {
+        "msg": "Ok",
+        "id": me.id
+    }
+
+    return jsonify(response_body), 200
 
 
 

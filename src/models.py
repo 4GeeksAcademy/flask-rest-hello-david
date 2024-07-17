@@ -17,7 +17,25 @@ class User(db.Model):
             # do not serialize the password, its a security breach
         }
 
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(200), nullable=False)
+    apellido = db.Column(db.String(100), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
+    fecha_de_subscripcion = db.Column(db.DateTime, nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    favoritos = db.relationship('Favoritos', backref='usuario', lazy=True)
 
+    def __repr__(self):
+        return '<Usuario %r>' % self.id
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "apellido": self.apellido,
+            "email": self.email
+        }
 
 class Planetas(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -103,4 +121,3 @@ class Favoritos(db.Model):
             "vehiculo_id": self.vehiculo_id,
             "nombre_id": self.nombre_id,
         }
-
