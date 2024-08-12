@@ -20,7 +20,7 @@ if db_url is not None:
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace("postgres://", "postgresql://")
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 MIGRATE = Migrate(app, db)
 db.init_app(app)
@@ -79,6 +79,18 @@ def create_user():
 
     return jsonify(response_body), 200
 
+@app.route("/user/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    user=User.query.get(user_id)
+
+    if not user:
+        return jsonify({"msj":"usuario no encontrado"}), 404
+    
+    db.session.delete(user)
+    db.session.commit()
+
+    return jsonify({"msj":"usuario eliminado"}), 200
+
 
 
 @app.route('/planetas', methods=['GET'])
@@ -124,6 +136,18 @@ def create_planetas():
 
     return jsonify(response_body), 200
 
+@app.route("/planetas/<int:planetas_id>", methods=["DELETE"])
+def delete_planetas(planetas_id):
+    planetas=Planetas.query.get(planetas_id)
+
+    if not planetas:
+        return jsonify({"msj":"planeta no encontrado"}), 404
+    
+    db.session.delete(planetas)
+    db.session.commit()
+
+    return jsonify({"msj":"planeta eliminado"}), 200
+
 
 
 @app.route('/personas', methods=['GET'])
@@ -168,6 +192,18 @@ def create_personas():
     }
 
     return jsonify(response_body), 200
+
+@app.route("/personas/<int:personas_id>", methods=["DELETE"])
+def delete_personas(personas_id):
+    personas=Personas.query.get(personas_id)
+
+    if not personas:
+        return jsonify({"msj":"persona no encontrado"}), 404
+    
+    db.session.delete(personas)
+    db.session.commit()
+
+    return jsonify({"msj":"persona eliminado"}), 200
 
 
 
@@ -216,6 +252,18 @@ def create_vehiculos():
 
     return jsonify(response_body), 200
 
+@app.route("/vehiculos/<int:vehiculos_id>", methods=["DELETE"])
+def delete_vehiculos(vehiculos_id):
+    vehiculos=Vehiculos.query.get(vehiculos_id)
+
+    if not vehiculos:
+        return jsonify({"msj":"vehiculo no encontrado"}), 404
+    
+    db.session.delete(vehiculos)
+    db.session.commit()
+
+    return jsonify({"msj":"vehiculo eliminado"}), 200
+
 
 
 @app.route('/favoritos', methods=['GET'])
@@ -261,6 +309,17 @@ def create_favoritos():
 
     return jsonify(response_body), 200
 
+@app.route("/favoritos/<int:favoritos_id>", methods=["DELETE"])
+def delete_favoritos(favoritos_id):
+    favoritos=Favoritos.query.get(favoritos_id)
+
+    if not favoritos:
+        return jsonify({"msj":"favortio no encontrado"}), 404
+    
+    db.session.delete(favoritos)
+    db.session.commit()
+
+    return jsonify({"msj":"usuario eliminado"}), 200
 
 
 
